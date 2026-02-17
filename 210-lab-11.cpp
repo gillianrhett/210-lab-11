@@ -7,7 +7,7 @@
 using namespace std;
 
 struct Trip {
-// this is for planning and storing info about group trips
+// this struct is for planning and storing info about group trips
     string destination; // name of location they will travel to    
     int duration; // number of days
     double price = 1.0; // price per person - using default while testing other stuff
@@ -26,11 +26,19 @@ struct Trip {
 void inputTripData(Trip*);
 void displayTripData(Trip*);
 
+const int numTrips = 3;
+
 int main() {
+    // one example trip for testing
     Trip* april = new Trip;
     inputTripData(april);
 
+    // make an array to store trips
+    Trip* tripsArr = new Trip[numTrips];
+
+
     delete april;
+    delete[] tripsArr;
 
     return 0;
 }
@@ -44,7 +52,7 @@ void inputTripData(Trip* trip) {
     getline(cin, trip->destination);
     
     cout << "Enter the duration (number of days): ";
-    // input validation: duration is a number > 0
+    // input validation: duration is an integer > 0
     bool validInput = false;
     while (!validInput) {
         try
@@ -56,21 +64,42 @@ void inputTripData(Trip* trip) {
         }
         catch(invalid_argument& e)
         {
-            //cerr << e.what() << '\n'; // VSCode autocompleted this
             cout << "Error: " << e.what();
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
             // then repeat the while loop so they can enter another number
         }
     }
-    // TODO get and validate price
+
     cout << "Enter the price per person: ";
-    // input validation: price is a number > 0
+    // input validation: price is a double > 0.0
+    validInput = false;
+    while (!validInput) {
+        try
+        {
+            cin >> trip->price;
+            if (cin.fail() || trip->price <= 0.0)
+                throw invalid_argument("enter a number greater than 0: ");
+            validInput = true;
+        }
+        catch(invalid_argument& e)
+        {
+            cout << "Error: " << e.what();
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            // then repeat the while loop so they can enter another number
+        }
+    }
 
-    cout << "Enter the first participant's name: ";
-    // TODO make the array
-
-    // TODO loop where they can enter more names; enter 0 to finish
+    // TODO participants in an array
+    int numParticipants = 0;
+    cout << "Enter the number of participants: ";
+    cin >> numParticipants;
+    trip->participants = new string[numParticipants];
+    for(int i = 0; i < numParticipants; ++i) {
+        cout << "Enter participant " << i + 1 << "'s name: "; // TODO debug?
+        getline(cin, *(trip->participants + i));
+    }
 }
 
 void displayTripData(Trip* trip) {
