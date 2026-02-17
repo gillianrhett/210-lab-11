@@ -26,16 +26,47 @@ struct Trip {
 void inputTripData(Trip*);
 void displayTripData(Trip*);
 
-const int numTrips = 3;
-
 int main() {
+
+    int numTrips = 0; // let the user decide
+    cout << "==== Trip Manager ====" << endl << endl;
+    cout << "How many trips do you want to store? ";
+    bool validInput = false;
+    while (!validInput) {
+        try
+        {
+            cin >> numTrips;
+            if (cin.fail() || numTrips < 1)
+                throw invalid_argument("enter a number at least 1: ");
+            validInput = true;
+        }
+        catch(invalid_argument& e)
+        {
+            cout << "Error: " << e.what();
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            // then it repeats the while loop so they can enter another number
+        }
+    }
+    cout << endl;
     // one example trip for testing
     Trip* april = new Trip;
     inputTripData(april);
 
     // make an array to store trips
     Trip* tripsArr = new Trip[numTrips];
+    
+    // user enters data about each trip
+    cout << "== Enter trip data ==" << endl;
+    for(int i = 0; i < numTrips; ++i) {
+        
+    }
 
+    // after they input the trips, display the data
+    cout << "\n== Stored Trips ==" << endl;
+    for(int i = 0; i < numTrips; ++i) {
+
+    }
 
     delete april;
     delete[] tripsArr;
@@ -49,6 +80,9 @@ void inputTripData(Trip* trip) {
 
     // get the destination; it will accept any string
     cout << "Enter the destination: ";
+    // clear the console input so getline will work
+    cin.clear();
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
     getline(cin, trip->destination);
     
     cout << "Enter the duration (number of days): ";
@@ -67,7 +101,7 @@ void inputTripData(Trip* trip) {
             cout << "Error: " << e.what();
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            // then repeat the while loop so they can enter another number
+            // then it repeats the while loop so they can enter another number
         }
     }
 
@@ -91,13 +125,18 @@ void inputTripData(Trip* trip) {
         }
     }
 
-    // TODO participants in an array
     int numParticipants = 0;
     cout << "Enter the number of participants: ";
-    cin >> numParticipants;
-    trip->participants = new string[numParticipants];
+    cin >> numParticipants;    
+    trip->participants = new string[numParticipants]; // change from nullptr to point at this new array
+
+    // clear the console input so getline will work
+    cin.clear();
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+    // let them enter the number of participants they chose
     for(int i = 0; i < numParticipants; ++i) {
-        cout << "Enter participant " << i + 1 << "'s name: "; // TODO debug?
+        cout << "Enter participant " << i + 1 << "'s name: ";
         getline(cin, *(trip->participants + i));
     }
 }
