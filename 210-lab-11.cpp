@@ -24,11 +24,14 @@ struct Trip {
 Trip createTrip();
 void inputTripData(Trip*);
 void displayTripData(Trip*);
-int checkInput(int);
-double checkInput(double); //
+int getValidInput(int);
+double getValidInput(double);
 
 int main() {
-
+    int num;
+    cout << "Enter number: "; // TESTING
+    cin >> num; // TESTING
+    getValidInput(num); // TESTING
     return 0;
 }
 
@@ -42,21 +45,7 @@ void inputTripData(Trip* trip) {
     
     cout << "Enter the duration (number of days): ";
     // input validation: duration is a number > 0
-    bool validInput = false;
-    while (!validInput) {
-        try
-        {
-            cin >> trip->duration;
-            if (cin.fail())
-                throw invalid_argument("enter a number at least 1:");
-            validInput = true;
-        }
-        catch(invalid_argument& e)
-        {
-            cerr << e.what() << '\n';
-        }
-    }
-    validInput = false; // using this again for validating the price input
+    
     cout << "Enter the price per person: ";
     // input validation: price is a number > 0
 
@@ -68,4 +57,29 @@ void inputTripData(Trip* trip) {
 
 void displayTripData(Trip* trip) {
 
+}
+
+int getValidInput(int numIn) {
+    bool validInput = false;
+    while (!validInput) {
+        try // I haven't had a lot of practice with this yet so it's taking some time
+        {
+            cin >> numIn;
+            if (cin.fail() || numIn < 1)
+                throw invalid_argument("enter a number at least 1: ");
+            validInput = true;
+        }
+        catch(invalid_argument& e)
+        {
+            //cerr << e.what() << '\n'; // VSCode autocompleted this
+            cout << "Error: " << e.what();
+            // then repeat the while loop so they can enter another number
+        }
+    }
+    return numIn;
+}
+
+double getValidInput(double numIn) {
+
+    return numIn;
 }
