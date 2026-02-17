@@ -24,6 +24,8 @@ struct Trip {
 Trip createTrip();
 void inputTripData(Trip*);
 void displayTripData(Trip*);
+int checkInput(int);
+double checkInput(double); //
 
 int main() {
 
@@ -37,8 +39,33 @@ void inputTripData(Trip* trip) {
     // get the destination; it will accept any string
     cout << "Enter the destination: ";
     getline(cin, trip->destination);
-    int duration; // number of days
-    double price; // price per person
-    string* participants;
+    
+    cout << "Enter the duration (number of days): ";
+    // input validation: duration is a number > 0
+    bool validInput = false;
+    while (!validInput) {
+        try
+        {
+            cin >> trip->duration;
+            if (cin.fail())
+                throw invalid_argument("enter a number at least 1:");
+            validInput = true;
+        }
+        catch(invalid_argument& e)
+        {
+            cerr << e.what() << '\n';
+        }
+    }
+    validInput = false; // using this again for validating the price input
+    cout << "Enter the price per person: ";
+    // input validation: price is a number > 0
+
+    cout << "Enter the first participant's name: ";
+    // make the array
+
+    // loop where they can enter more names; enter 0 to finish
 }
 
+void displayTripData(Trip* trip) {
+
+}
