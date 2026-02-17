@@ -57,7 +57,7 @@ int main() {
     // user enters data about each trip
     cout << "== Enter trip data ==" << endl;
     for(int i = 0; i < numTrips; ++i) {
-        cout << "= Trip " << i + 1 << " =" << endl;
+        cout << "\n= Trip " << i + 1 << " =" << endl;
         inputTripData((tripsArr + i)); // enter each trip's data via the pointer to it
     }
 
@@ -78,9 +78,6 @@ void inputTripData(Trip* trip) {
 
     // get the destination; it will accept any string
     cout << "Enter the destination: ";
-    // clear the console input so getline will work
-    cin.clear();
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
     getline(cin, trip->destination);
     
     cout << "Enter the duration (number of days): ";
@@ -128,19 +125,11 @@ void inputTripData(Trip* trip) {
     cin >> numParticipants;    
     trip->participants = new string[numParticipants]; // change from nullptr to point at this new array
 
-    // clear the console input so getline will work
-    cin.clear();
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
-
     // let them enter the number of participants they chose
     for(int i = 0; i < numParticipants; ++i) {
         cout << "Enter participant " << i + 1 << "'s name: ";
         getline(cin, *(trip->participants + i));
     }
-
-    // need to clear it again?
-    cin.clear();
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
 }
 
 void displayTripData(Trip* trip) {
