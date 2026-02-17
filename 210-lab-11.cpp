@@ -49,17 +49,16 @@ int main() {
         }
     }
     cout << endl;
-    // one example trip for testing
-    Trip* april = new Trip;
-    inputTripData(april);
 
     // make an array to store trips
     Trip* tripsArr = new Trip[numTrips];
+    // the pointer tripsArr points to a new array of trips
     
     // user enters data about each trip
     cout << "== Enter trip data ==" << endl;
     for(int i = 0; i < numTrips; ++i) {
-        
+        cout << "= Trip " << i + 1 << " =" << endl;
+        inputTripData((tripsArr + i)); // enter each trip's data via the pointer to it
     }
 
     // after they input the trips, display the data
@@ -68,7 +67,6 @@ int main() {
 
     }
 
-    delete april;
     delete[] tripsArr;
 
     return 0;
@@ -139,6 +137,10 @@ void inputTripData(Trip* trip) {
         cout << "Enter participant " << i + 1 << "'s name: ";
         getline(cin, *(trip->participants + i));
     }
+
+    // need to clear it again?
+    cin.clear();
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
 }
 
 void displayTripData(Trip* trip) {
