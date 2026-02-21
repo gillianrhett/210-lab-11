@@ -157,14 +157,17 @@ void inputTripData(Trip* trip) {
 void displayTripData(Trip* trip) {
 // takes a pointer to an existing Trip
 //  displays the data on that trip
-    cout << fixed << setw(19) << "Destination: " << trip->destination << endl;
-    cout << fixed << setw(19) << "Duration (days): " << trip->duration << endl;
-    cout << fixed << setw(19) << "Price per person: $" << setprecision(2) << trip->price << endl;
-    cout << fixed << setw(19) << "Participants:" << endl;
+    cout << fixed << setw(18) << "Destination: " << trip->destination << endl;
+    cout << fixed << setw(18) << "Duration (days): " << trip->duration << endl;
+    cout << fixed << setw(18) << "Price per person: " << "$" << setprecision(2) << trip->price << endl;
+    cout << fixed << setw(18) << "Participants: ";
 
     // loop to display the list of participants' names
     for (int i = 0; i < trip->numParticipants; ++i) {
-        cout << "    " << *(trip->participants + i) << endl;
+        if (i == 0)
+            cout << *(trip->participants + i) << endl;
+        else
+            cout << fixed << setw(18) << " " << *(trip->participants + i) << endl;
     }
     cout << endl;
 }
