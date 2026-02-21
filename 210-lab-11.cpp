@@ -83,8 +83,6 @@ void inputTripData(Trip* trip) {
     // get the destination; it will accept any string
     cout << "Enter the destination: ";
     getline(cin, trip->destination);
-    cout << trip->destination << endl; // TESTING
-    //cin.ignore(numeric_limits<streamsize>::max(), '\n');
     
     cout << "Enter the duration (number of days): ";
     // input validation: duration is an integer > 0
@@ -153,18 +151,17 @@ void inputTripData(Trip* trip) {
     for(int i = 0; i < trip->numParticipants; ++i) {
         cout << "Enter participant " << i + 1 << "'s name: ";
         getline(cin, *(trip->participants + i));
-        cout << *(trip->participants + i) << endl; // TESTING
-        //cin.ignore(numeric_limits<streamsize>::max(), '\n');
     }
 }
 
 void displayTripData(Trip* trip) {
 // takes a pointer to an existing Trip
 //  displays the data on that trip
-    cout << fixed << setw(18) << "Destination: " << trip->destination << endl;
-    cout << fixed << setw(18) << "Duration (days): " << trip->duration << endl;
-    cout << fixed << setw(18) << "Price per person: $" << setprecision(2) << trip->price << endl;
-    cout << fixed << setw(18) << "Participants:" << endl;
+    cout << fixed << setw(19) << "Destination: " << trip->destination << endl;
+    cout << fixed << setw(19) << "Duration (days): " << trip->duration << endl;
+    cout << fixed << setw(19) << "Price per person: $" << setprecision(2) << trip->price << endl;
+    cout << fixed << setw(19) << "Participants:" << endl;
+
     // loop to display the list of participants' names
     for (int i = 0; i < trip->numParticipants; ++i) {
         cout << "    " << *(trip->participants + i) << endl;
