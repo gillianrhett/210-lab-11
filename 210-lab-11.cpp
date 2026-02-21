@@ -38,6 +38,7 @@ int main() {
         try
         {
             cin >> numTrips;
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
             if (cin.fail() || numTrips < 1)
                 throw invalid_argument("enter a number at least 1: ");
             validInput = true;
@@ -83,7 +84,7 @@ void inputTripData(Trip* trip) {
     cout << "Enter the destination: ";
     getline(cin, trip->destination);
     cout << trip->destination << endl; // TESTING
-    cin.ignore();
+    //cin.ignore(numeric_limits<streamsize>::max(), '\n');
     
     cout << "Enter the duration (number of days): ";
     // input validation: duration is an integer > 0
@@ -92,6 +93,7 @@ void inputTripData(Trip* trip) {
         try
         {
             cin >> trip->duration;
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
             if (cin.fail() || trip->duration < 1)
                 throw invalid_argument("enter a whole number at least 1: ");
             validInput = true;
@@ -112,6 +114,7 @@ void inputTripData(Trip* trip) {
         try
         {
             cin >> trip->price;
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
             if (cin.fail() || trip->price <= 0.0)
                 throw invalid_argument("enter a number greater than 0: ");
             validInput = true;
@@ -131,6 +134,7 @@ void inputTripData(Trip* trip) {
         try
         {
             cin >> trip->numParticipants;
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
             if (cin.fail() || trip->numParticipants < 1)
                 throw invalid_argument("enter a whole number at least 1: ");
             validInput = true;
@@ -150,7 +154,7 @@ void inputTripData(Trip* trip) {
         cout << "Enter participant " << i + 1 << "'s name: ";
         getline(cin, *(trip->participants + i));
         cout << *(trip->participants + i) << endl; // TESTING
-        cin.ignore();
+        //cin.ignore(numeric_limits<streamsize>::max(), '\n');
     }
 }
 
