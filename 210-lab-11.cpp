@@ -12,6 +12,7 @@ struct Trip {
     int duration; // number of days
     double price = 1.0; // price per person - using default while testing other stuff
     string* participants = nullptr; // dynamic array of people's names
+    int numParticipants; // how many participants (length of participants array)
 
     ~Trip () {
         if(participants != nullptr) {
@@ -65,7 +66,8 @@ int main() {
     // after they input the trips, display the data
     cout << "\n== Stored Trips ==" << endl;
     for(int i = 0; i < numTrips; ++i) {
-        
+        cout << "Trip " << i + 1 << endl;
+        displayTripData((tripsArr + i));
     }
 
     delete[] tripsArr;
@@ -80,6 +82,7 @@ void inputTripData(Trip* trip) {
     // get the destination; it will accept any string
     cout << "Enter the destination: ";
     getline(cin, trip->destination);
+    cout << trip->destination << endl; // TESTING
     cin.ignore();
     
     cout << "Enter the duration (number of days): ";
@@ -122,14 +125,13 @@ void inputTripData(Trip* trip) {
         }
     }
 
-    int numParticipants = 0;
     cout << "Enter the number of participants: ";
     validInput = false;
     while (!validInput) {
         try
         {
-            cin >> numParticipants;
-            if (cin.fail() || numParticipants < 1)
+            cin >> trip->numParticipants;
+            if (cin.fail() || trip->numParticipants < 1)
                 throw invalid_argument("enter a whole number at least 1: ");
             validInput = true;
         }
@@ -141,12 +143,13 @@ void inputTripData(Trip* trip) {
             // then repeat the while loop so they can enter another number
         }
     }
-    trip->participants = new string[numParticipants]; // change from nullptr to point at this new array
+    trip->participants = new string[trip->numParticipants]; // change from nullptr to point at this new array
 
     // let them enter the number of participants they chose
-    for(int i = 0; i < numParticipants; ++i) {
+    for(int i = 0; i < trip->numParticipants; ++i) {
         cout << "Enter participant " << i + 1 << "'s name: ";
         getline(cin, *(trip->participants + i));
+        cout << *(trip->participants + i) << endl; // TESTING
         cin.ignore();
     }
 }
@@ -154,9 +157,13 @@ void inputTripData(Trip* trip) {
 void displayTripData(Trip* trip) {
 // takes a pointer to an existing Trip
 //  displays the data on that trip
-    cout << fixed << setw(18) << "Destination: " << trip->destination;
-    cout << fixed << setw(18) << "Duration (days): " << trip->duration;
-    cout << fixed << setw(18) << "Price per person: $" << setprecision(2) << trip->price;
+    cout << fixed << setw(18) << "Destination: " << trip->destination << endl;
+    cout << fixed << setw(18) << "Duration (days): " << trip->duration << endl;
+    cout << fixed << setw(18) << "Price per person: $" << setprecision(2) << trip->price << endl;
+    cout << fixed << setw(18) << "Participants:" << endl;
     // loop to display the list of participants' names
-    
+    for (int i = 0; i < trip->numParticipants; ++i) {
+        cout << "    " << *(trip->participants + i) << endl;
+    }
+    cout << endl;
 }
